@@ -1,3 +1,4 @@
+import MathUtils from "./MathUtils";
 
 
 export class Vector3D {
@@ -224,7 +225,7 @@ export class Vector3D {
     }
 
     /**
-     * 向量点乘
+     * 向量点乘dot(a,b)=|a||b|*cos(angle)
      * @param a 
      * @param b 
      * @returns 0 互相垂直 >0 向量夹角小于90度  <0 向量夹角大于90度 
@@ -234,22 +235,37 @@ export class Vector3D {
     }
 
     /**
-     * 求两个向量之间的夹角
-     * @param a 
+     * 求两个向量之间的夹角 cos(a,b)=dot(a,b)/|a||b|
+     * @param a
      * @param b 
      */
     static angle(a: Vector3D, b: Vector3D): number {
-        //dot(a,b)=|a||b|*cos(angle)
         return Math.acos(Vector3D.dot(a, b) / (a.length * b.length));
     }
 
     /**
-     * 求A向量在B向量上的投影长度
+     * 求两个单位向量之间的夹角 cos(a,b)=dot(a,b)/|a||b| 因为a,b 是单位向量，所以分母必为1，而任何数除1等于他本身。
+     * @param a
+     * @param b 
+     */
+    static angleFast(a:Vector3D,b:Vector3D):number{
+        return Math.acos(Vector3D.dot(a,b));
+    }
+
+    /**
+     * 求A向量在B向量上的投影长度,
+     * 假设C为A在B上的投影向量,
+     * 那么|C|=|B|cos(A,B),而cos(A,B)=|A|(dot(A,B)/|A||B|)=dot(A,B)/|B|,
+     * 所以|C|=dot(A,B)/|B|,C=B的单位向量乘以|C|
      * @param a 
      * @param b 
      */
     static projection(a: Vector3D, b: Vector3D): number {
-        //dot(a,b)/|b|
+        let len:number=b.length;
+        if(MathUtils.equals(len,0)){
+            console.error("无法投影到零向量上！");
+            return 0;
+        }
         return this.dot(a, b) / b.length;
     }
     
