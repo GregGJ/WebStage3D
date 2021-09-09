@@ -255,7 +255,7 @@ export class Vector3D {
     /**
      * 求A向量在B向量上的投影长度,
      * 假设C为A在B上的投影向量,
-     * 那么|C|=|B|cos(A,B),而cos(A,B)=|A|(dot(A,B)/|A||B|)=dot(A,B)/|B|,
+     * 那么|C|=|A|cos(A,B),而cos(A,B)=dot(A,B)/|A||B|,
      * 所以|C|=dot(A,B)/|B|,C=B的单位向量乘以|C|
      * @param a 
      * @param b 
