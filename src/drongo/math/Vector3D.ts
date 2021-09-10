@@ -3,22 +3,55 @@ import MathUtils from "./MathUtils";
 
 export class Vector3D {
 
-    x: number = 0;
-    y: number = 0;
-    z: number = 0;
+    private __elements: Float32Array | Float64Array | Array<number>;
 
     constructor(x?: number, y?: number, z?: number) {
-        if (this.x != undefined) {
-            this.x = x!;
-        }
-        if (this.y != undefined) {
-            this.y = y!;
-        }
-        if (this.z != undefined) {
-            this.z = z!;
-        }
+        this.__elements = new MathUtils.ArrayType(3);
+        this.__elements[0] = x === undefined ? 0 : x;
+        this.__elements[1] = y === undefined ? 0 : y;
+        this.__elements[2] = z === undefined ? 0 : z;
     }
 
+    /**X分量 */
+    get x(): number {
+        return this.__elements[0];
+    }
+
+    set x(value: number) {
+        if (this.__elements[0] == value) {
+            return;
+        }
+        this.__elements[0] = value;
+    }
+
+    /**Y分量 */
+    get y(): number {
+        return this.__elements[1];
+    }
+
+    set y(value: number) {
+        if (this.__elements[1] == value) {
+            return;
+        }
+        this.__elements[1] = value;
+    }
+
+    /**Z分量 */
+    get z(): number {
+        return this.__elements[2];
+    }
+
+    set z(value: number) {
+        if (this.__elements[2] == value) {
+            return;
+        }
+        this.__elements[2] = value;
+    }
+
+    /**元素集合 */
+    get elements(): Float32Array | Float64Array | Array<number> {
+        return this.__elements;
+    }
     /**
      * 设置值
      * @param x 
@@ -248,8 +281,8 @@ export class Vector3D {
      * @param a
      * @param b 
      */
-    static angleFast(a:Vector3D,b:Vector3D):number{
-        return Math.acos(Vector3D.dot(a,b));
+    static angleFast(a: Vector3D, b: Vector3D): number {
+        return Math.acos(Vector3D.dot(a, b));
     }
 
     /**
@@ -261,14 +294,14 @@ export class Vector3D {
      * @param b 
      */
     static projection(a: Vector3D, b: Vector3D): number {
-        let len:number=b.length;
-        if(MathUtils.equals(len,0)){
+        let len: number = b.length;
+        if (MathUtils.equals(len, 0)) {
             console.error("无法投影到零向量上！");
             return 0;
         }
         return this.dot(a, b) / b.length;
     }
-    
+
     /**
      * 向量叉乘(求垂直于ab的向量)
      * @param a 

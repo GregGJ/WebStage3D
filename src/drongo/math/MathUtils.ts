@@ -11,7 +11,20 @@ export default class MathUtils {
 
     /**弧度到度的换算系数*/
     static readonly radToDegreeFactor: number = 180 / Math.PI;
-    
+
+    /**
+    * 数组数据容器类型
+    */
+    static ArrayType: typeof Float32Array | typeof Float64Array | typeof Array = Float32Array;
+
+    /**
+     * 设置数组数据容器类型
+     * @param type
+     */
+    static setArrayType(type: typeof Float32Array | typeof Float64Array | typeof Array): void {
+        MathUtils.ArrayType = type;
+    }
+
     /**
      * 检测是否相等(误差1e-6)
      * @param a
